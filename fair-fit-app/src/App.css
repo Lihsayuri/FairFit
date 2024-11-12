@@ -1,16 +1,45 @@
 .App {
   text-align: center;
-  font-family: Arial, sans-serif;
-  color: #333;
+  display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #e8f5e9;
+    /* Light green background */
 }
 
 .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+  font-size: 2em;
+    color: #388e3c;
+    /* Dark green color for header text */
+    padding: 20px;
+    font-weight: bold;
+    width: 100%;
+    text-align: center;
+    background-color: #c8e6c9;
+  }
+  
+  .button-container {
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  gap: 20px;
+    margin-top: 20px;
+  }
+  
+  .nav-button {
+    padding: 10px 20px;
+    font-size: 1em;
+    font-weight: bold;
   color: white;
+  background-color: #4caf50;
+    /* Button green color */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .nav-button:hover {
+    background-color: #388e3c;
+    /* Darker green on hover */
 }

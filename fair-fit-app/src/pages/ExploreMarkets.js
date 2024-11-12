@@ -4,7 +4,6 @@ import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 import { getDistance } from 'geolib';
 import * as XLSX from 'xlsx';
 
-
 const containerStyle = {
   width: '100%',
   height: '400px',
@@ -49,7 +48,7 @@ function ExploreMarkets() {
         setUserLocation({ latitude, longitude });
 
         console.log('Latitude:', latitude);
-        console.log('Longitude oi:', longitude);
+        console.log('Longitude:', longitude);
       });
     } else {
       console.error('Geolocalização não é suportada pelo navegador.');
@@ -100,6 +99,10 @@ function ExploreMarkets() {
     fetchNearbyMarkets();
   }, [userLocation, markets, distanceRadius]); // Inclui distanceRadius como dependência
 
+  const goToHome = () => {
+    window.location.href = "/"; // Ajuste esta URL para o caminho correto da página inicial
+  };
+
   return (
     <div className="explore-markets">
       <h2>Explore Markets</h2>
@@ -147,6 +150,11 @@ function ExploreMarkets() {
       ) : (
         <p>Não há mercados próximos dentro do raio selecionado.</p>
       )}
+
+      {/* Botão para voltar à página inicial */}
+      <div className="home-button-container">
+        <button onClick={goToHome} className="home-button">Home</button>
+      </div>
     </div>
   );
 }

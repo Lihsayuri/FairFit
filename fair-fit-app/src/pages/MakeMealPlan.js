@@ -1,34 +1,76 @@
 import React, { useState } from 'react';
 
 function MyPage() {
-  // Definindo os três conjuntos de cards
+  // Define the three groups of cards with dietary restrictions, allergies, and diet goals
   const cardGroups = [
-    Array.from({ length: 10 }, (_, index) => `Grupo 1 - Card ${index + 1}`),
-    Array.from({ length: 10 }, (_, index) => `Grupo 2 - Card ${index + 1}`),
-    Array.from({ length: 10 }, (_, index) => `Grupo 3 - Card ${index + 1}`)
+    {
+      type: "Dietary Restrictions",
+      cards: [
+        "Gluten-Free",
+        "Lactose-Free",
+        "Vegan",
+        "Vegetarian",
+        "Low Carb",
+        "Sugar-Free",
+        "Kosher",
+        "Halal",
+        "Paleo",
+        "Keto"
+      ],
+    },
+    {
+      type: "Allergies",
+      cards: [
+        "Peanut Allergy",
+        "Tree Nut Allergy",
+        "Egg Allergy",
+        "Fish Allergy",
+        "Shellfish Allergy",
+        "Wheat Allergy",
+        "Soy Allergy",
+        "Milk Allergy",
+        "Sesame Allergy",
+        "Sulphite Allergy"
+      ],
+    },
+    {
+      type: "Diet Goals",
+      cards: [
+        "Weight Loss",
+        "Muscle Gain",
+        "Maintain Weight",
+        "Increase Energy",
+        "Improve Digestion",
+        "Boost Immunity",
+        "Lower Cholesterol",
+        "Control Blood Sugar",
+        "Reduce Inflammation",
+        "Heart Health"
+      ],
+    },
   ];
 
-  // Estados para o grupo atual, seleção de cartões, e controle de navegação
+  // States for the current group, selected cards, and navigation control
   const [currentGroupIndex, setCurrentGroupIndex] = useState(0);
   const [selectedCardsGroup1, setSelectedCardsGroup1] = useState([]);
   const [selectedCardsGroup2, setSelectedCardsGroup2] = useState([]);
   const [selectedCardsGroup3, setSelectedCardsGroup3] = useState([]);
 
-  // Função para obter o estado de seleção do grupo atual
+  // Function to get the selected cards for the current group
   const getSelectedCards = () => {
     if (currentGroupIndex === 0) return selectedCardsGroup1;
     if (currentGroupIndex === 1) return selectedCardsGroup2;
     return selectedCardsGroup3;
   };
 
-  // Função para definir o estado de seleção do grupo atual
+  // Function to set the selected cards for the current group
   const setSelectedCards = (newSelectedCards) => {
     if (currentGroupIndex === 0) setSelectedCardsGroup1(newSelectedCards);
     else if (currentGroupIndex === 1) setSelectedCardsGroup2(newSelectedCards);
     else setSelectedCardsGroup3(newSelectedCards);
   };
 
-  // Alterna a seleção de um card com base no conteúdo do card
+  // Toggle the selection of a card based on its content
   const toggleCardSelection = (card) => {
     setSelectedCards((prevState) =>
       prevState.includes(card)
@@ -37,19 +79,19 @@ function MyPage() {
     );
   };
 
-  // Função para avançar para o próximo grupo de cartões ou ir para outra página
+  // Function to move to the next group or go to another page
   const nextGroup = () => {
     if (currentGroupIndex < cardGroups.length - 1) {
       setCurrentGroupIndex((prevIndex) => prevIndex + 1);
     } else {
-      // Salvar todos os cartões selecionados no localStorage antes de redirecionar
+      // Save all selected cards in localStorage before redirecting
       const allSelectedCards = [...selectedCardsGroup1, ...selectedCardsGroup2, ...selectedCardsGroup3];
       localStorage.setItem('selectedCards', JSON.stringify(allSelectedCards));
-      window.location.href = "/outra-pagina"; // Redireciona para outra página
+      window.location.href = "/next-page"; // Redirects to another page
     }
   };
 
-  // Função para retroceder para o grupo anterior de cartões
+  // Function to go back to the previous group of cards
   const previousGroup = () => {
     if (currentGroupIndex > 0) {
       setCurrentGroupIndex((prevIndex) => prevIndex - 1);
@@ -60,12 +102,12 @@ function MyPage() {
     <div style={styles.pageContainer}>
       {/* Header */}
       <header style={styles.header}>
-        <h1>Meu Header</h1>
+        <h1>My Header</h1>
       </header>
 
-      {/* ScrollView de Cards */}
+      {/* ScrollView of Cards */}
       <div style={styles.scrollView}>
-        {cardGroups[currentGroupIndex].map((card) => (
+        {cardGroups[currentGroupIndex].cards.map((card) => (
           <div
             key={card}
             style={{
@@ -79,25 +121,29 @@ function MyPage() {
         ))}
       </div>
 
-      {/* Botões no final da ScrollView */}
+      {/* ScrollView Buttons */}
       <div style={styles.scrollViewButtons}>
         <button
           style={{ ...styles.button, opacity: currentGroupIndex === 0 ? 0.5 : 1 }}
           onClick={previousGroup}
           disabled={currentGroupIndex === 0}
         >
-          Botão 1 - Anterior
+          {currentGroupIndex > 0
+            ? `Previous: ${cardGroups[currentGroupIndex - 1].type}`
+            : "Previous"}
         </button>
         <button style={styles.button} onClick={nextGroup}>
-          Botão 2 - Próximo
+          {currentGroupIndex < cardGroups.length - 1
+            ? `Next: ${cardGroups[currentGroupIndex + 1].type}`
+            : "Finish"}
         </button>
       </div>
 
-      {/* Botões na parte inferior da página */}
+      {/* Bottom Page Buttons */}
       <footer style={styles.footer}>
-        <button style={styles.button}>Botão A</button>
-        <button style={styles.button}>Botão B</button>
-        <button style={styles.button}>Botão C</button>
+        <button style={styles.button}>Button A</button>
+        <button style={styles.button}>Button B</button>
+        <button style={styles.button}>Button C</button>
       </footer>
     </div>
   );
@@ -107,51 +153,75 @@ const styles = {
   pageContainer: {
     display: 'flex',
     flexDirection: 'column',
-    height: '100vh',
+    minHeight: '100vh',
+    backgroundColor: '#f1f8e9',
+    color: '#2e7d32',
+    fontFamily: 'Arial, sans-serif',
   },
   header: {
-    padding: '10px',
-    backgroundColor: '#007bff',
+    padding: '20px',
+    backgroundColor: '#66bb6a',
     color: 'white',
     textAlign: 'center',
+    fontSize: '1.8em',
+    fontWeight: 'bold',
   },
   scrollView: {
     flex: 1,
-    overflowY: 'auto',
-    padding: '10px',
     display: 'flex',
     flexWrap: 'wrap',
     gap: '10px',
+    padding: '20px',
     justifyContent: 'center',
-    maxHeight: '300px', // Limita a altura da ScrollView
+    overflowY: 'auto',
   },
   card: {
-    padding: '20px',
+    padding: '15px 10px',
     border: '1px solid #ccc',
-    borderRadius: '5px',
+    borderRadius: '8px',
     cursor: 'pointer',
-    width: '100px',
+    width: '120px',
     textAlign: 'center',
+    fontSize: '1em',
+    color: '#333',
+    transition: 'background-color 0.3s ease',
+    boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
   },
   scrollViewButtons: {
     display: 'flex',
     justifyContent: 'space-around',
-    padding: '10px',
-    borderTop: '1px solid #ccc',
+    padding: '15px',
+    backgroundColor: '#e0f2f1',
+    borderTop: '1px solid #c8e6c9',
+  },
+  button: {
+    padding: '10px 20px',
+    borderRadius: '5px',
+    border: 'none',
+    backgroundColor: '#66bb6a',
+    color: 'white',
+    cursor: 'pointer',
+    fontWeight: 'bold',
+    fontSize: '1em',
+    transition: 'background-color 0.3s ease',
   },
   footer: {
     display: 'flex',
     justifyContent: 'space-around',
     padding: '10px',
-    borderTop: '1px solid #ccc',
+    backgroundColor: '#c8e6c9',
+    borderTop: '1px solid #a5d6a7',
   },
-  button: {
+  footerButton: {
     padding: '10px 20px',
-    border: 'none',
     borderRadius: '5px',
-    backgroundColor: '#007bff',
+    border: 'none',
+    backgroundColor: '#388e3c',
     color: 'white',
     cursor: 'pointer',
+    fontWeight: 'bold',
+    fontSize: '1em',
+    transition: 'background-color 0.3s ease',
   },
 };
 

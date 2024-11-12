@@ -1,39 +1,38 @@
 .explore-markets {
-    text-align: center;
-  }
-  
-  .card-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 16px;
+  display: flex;
+    flex-direction: column;
+    align-items: center;
     padding: 20px;
   }
   
-  .market-card {
-    background-color: #fff;
-    border: 1px solid #ddd;
+  .card-container {
+  margin-top: 20px;
+  display: flex;
+    flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.market-card {
+  border: 1px solid #ccc;
+    padding: 15px;
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 250px;
-    padding: 16px;
-    transition: transform 0.2s;
+  width: 250px;
+  background-color: #f9f9f9;
   }
-  
-  .market-card:hover {
-    transform: scale(1.05);
-  }
-  
-  .market-card h3 {
-    color: #4CAF50;
-  }
-  
-  .market-card p {
-    margin: 8px 0;
-    color: #333;
-  }
-  
-  .market-card strong {
-    color: #555;
-  }
-  
+.home-button-container {
+  margin-top: 20px;
+}
+.home-button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
+}
+.home-button:hover {
+  background-color: #0056b3;
+}
